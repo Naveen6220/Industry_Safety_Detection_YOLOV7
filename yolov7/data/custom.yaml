@@ -1,0 +1,7 @@
+train: T:\\Industry Safety using YOLO V7\\train.txt
+val: T:\\Industry Safety using YOLO V7\\val.txt
+
+nc: 5
+names: ['Helmet', 'Goggles', 'Jacket', 'Gloves', 'Footwear']
+
+
