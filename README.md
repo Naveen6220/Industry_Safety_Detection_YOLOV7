@@ -6,32 +6,79 @@ In recent decades, there's been a lot of neglect in terms of safety and well-bei
 The main point of this application to create a detection system using Computer Vision and Machine Learning to monitor, track and enforce employees/workers to wear the necessary protection gears. ISD is designed and modelled to take a real-time image of the personnel as the input and determine if the five segments - helmet, gloves, jacket, goggles and footwear are worn before entering the workplace, and record the procedures as well. If ISD does not find any of the safety gears, the worker will not be allowed to proceed and the prohibition alarm in the system will alert the authorities.
 
 **Project Overview:**
-This project focuses on enhancing workplace safety by implementing real-time detection of workers' safety gears using YOLOv7 (You Only Look Once version 7). The utilization of transfer learning ensures the model's efficiency in recognizing safety equipment.
+This project focuses on enhancing workplace safety by detecting safety gears worn by workers in real-time using YOLOv7 (You Only Look Once version 7). The primary goal is to ensure that workers are adhering to safety protocols by identifying safety gear discrepancies.
 
 **Key Features:**
-- **YOLOv7:** The project employs YOLOv7, a state-of-the-art real-time object detection framework, for accurate and swift identification of safety gears.
-- **Transfer Learning:** Leveraging transfer learning techniques, the model is fine-tuned to adapt to specific safety gear recognition requirements.
-- **CI/CD with GitHub Actions:** Continuous Integration and Continuous Deployment (CI/CD) pipelines are implemented using GitHub Actions. With every push to GitHub, automated workflows initiate, ensuring seamless testing and deployment.
-- **Self-Hosted EC2 Runner:** GitHub Actions utilize a self-hosted EC2 runner, providing a scalable and efficient environment for the CI/CD processes.
-- **Dockerized Application:** Docker images are built during the CI/CD process and pushed to Amazon Elastic Container Registry (ECR), facilitating easy deployment and scalability.
+- **YOLOv7:** Implementing YOLOv7 for efficient real-time object detection.
+- **Transfer Learning:** Utilizing transfer learning techniques to fine-tune the model for custom safety gear recognition.
+- **CI/CD with GitHub Actions:** Implementing Continuous Integration and Continuous Deployment (CI/CD) pipelines using GitHub Actions. Automated workflows are triggered with each push to GitHub, ensuring smooth testing and deployment.
+- **Self-Hosted EC2 Runner:** Utilizing a self-hosted EC2 runner for GitHub Actions to push Docker images to Amazon ECR upon every GitHub push.
+- **Data Extraction from S3:** Extracting data from Amazon S3 for training and testing the safety gear detection model.
 
-**Data Extraction from S3:**
-Data for training and testing the model is extracted from Amazon S3, ensuring a centralized and easily accessible data source.
+## Tech Stack Used
+1. Python
+2. YOLOv7
+3. Transfer Learning
+4. GitHub Actions
+5. Docker
+6. MongoDB
 
-**How to Use:**
-1. Clone the repository.
-2. Configure AWS credentials for S3 access.
-3. Execute the CI/CD pipeline by pushing changes to the GitHub repository.
-4. Monitor the automated workflow for successful model training and Docker image deployment.
-5. Deploy the Dockerized application on Amazon EC2 for real-time safety gear detection.
+## Infrastructure Required
+1. AWS S3
+2. AWS EC2
+3. AWS ECR
+4. GitHub Actions
+5. MongoDB
 
-**Contributions and Feedback:**
-Contributions and feedback are welcome! Feel free to raise issues, submit pull requests, or provide suggestions to enhance the project.
+## How to Run
+Before running the project, ensure that MongoDB is installed locally. Additionally, an AWS account is required for accessing services such as S3, ECR, and EC2 instances.
 
-**License:**
-This project is licensed under the [MIT License](LICENSE).
+### Step 1: Clone the Repository
+```bash
+git clone https://github.com/Naveen6220/Industry_Safety_Detection_YOLOv7.git
+```
 
-**Acknowledgments:**
-Special thanks to the YOLOv7 community and GitHub for providing robust tools for CI/CD and version control.
+### Step 2: Set Up Conda Environment
+```bash
+conda create -n safety_detection python=3.9 -y
+conda activate safety_detection
+```
 
-Let's make workplaces safer together! 🛡️👷‍♂️
+### Step 3: Install Requirements
+```bash
+pip install -r requirements.txt
+```
+
+### Step 4: Export Environment Variables
+```bash
+export AWS_ACCESS_KEY_ID=<AWS_ACCESS_KEY_ID>
+export AWS_SECRET_ACCESS_KEY=<AWS_SECRET_ACCESS_KEY>
+export AWS_DEFAULT_REGION=<AWS_DEFAULT_REGION>
+export MONGODB_URL="mongodb+srv://<username>:<password>@your-mongodb-url"
+```
+
+### Step 5: Run the Application Server
+```bash
+python app.py
+```
+
+### Step 6: Train the Model
+Visit [http://localhost:8080/train](http://localhost:8080/train) to initiate model training.
+
+### Step 7: Make Predictions
+Visit [http://localhost:8080/predict](http://localhost:8080/predict) to make predictions using the trained model.
+
+## Run Locally using Docker
+1. Check if the Dockerfile is available in the project directory.
+2. Build the Docker image
+```bash
+docker build --build-arg AWS_ACCESS_KEY_ID=<AWS_ACCESS_KEY_ID> --build-arg AWS_SECRET_ACCESS_KEY=<AWS_SECRET_ACCESS_KEY> --build-arg AWS_DEFAULT_REGION=<AWS_DEFAULT_REGION> --build-arg MONGODB_URL=<MONGODB_URL> .
+```
+3. Run the Docker image
+```bash
+docker run -d -p 8080:8080 <IMAGE_NAME>
+```
+
+Note: Make sure to replace placeholders like `<AWS_ACCESS_KEY_ID>`, `<AWS_SECRET_ACCESS_KEY>`, `<AWS_DEFAULT_REGION>`, `<username>`, `<password>`, and `<your-mongodb-url>` with your actual values.
+
+Feel free to reach out if you have any questions or need further assistance!
